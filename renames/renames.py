@@ -43,3 +43,18 @@ def open_editor(file_path: str) -> int:
         status_code = 1
 
     return status_code
+
+
+def read_file_list_lines(file_path: str) -> List[str]:
+    """read file list lines from file list txt file
+
+    Arguments:
+        file_path {str} -- path of file list txt
+
+    Returns:
+        List[str] -- file list lines
+    """
+    with open(file_path, 'r') as f:
+        lines = [l.strip() for l in f]
+
+    return lines

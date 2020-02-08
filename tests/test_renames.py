@@ -5,6 +5,7 @@ from renames import renames
 
 TEST_PRODUCTS_PATH = os.path.join(os.path.dirname(__file__), 'test_products')
 TESTD0_PATH = os.path.join(os.path.dirname(__file__), 'testd0')
+TESTD1_PATH = os.path.join(os.path.dirname(__file__), 'testd1')
 
 
 def test_glob_file_names():
@@ -31,4 +32,17 @@ def test_write_file_names():
         lines = [l.strip('\n') for l in f]
 
     actual = sorted(lines)
+    assert expected == actual
+
+
+def test_read_file_lines():
+    expected = [
+        'src1 >> dst1',
+        'src2 >> dst2',
+        'src3 >> dst3',
+    ]
+
+    actual = renames.read_file_list_lines(os.path.join(TESTD1_PATH, 'filelist.txt'))
+    actual
+
     assert expected == actual
