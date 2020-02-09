@@ -68,7 +68,8 @@ def read_file_list_lines(file_path: str) -> List[str]:
 
 def build_file_name_pair(file_list_line: str) -> Tuple[str, str]:
     """Build and return file name pair of src and dst.
-    Return (src, dst) when file list line follows the correct format, otherwise retunr None.
+    Return (src, dst) when file list line follows the correct format.
+    If invalid syntax or characters, raise ValueError.
 
     Arguments:
         file_list_line {str} - - file list line
@@ -94,7 +95,7 @@ def has_duplicate_value(mp: Dict[str, str]) -> bool:
 
 def build_file_name_map(file_list_lines: List[str]) -> Dict[str, str]:
     """Build and return map of file name.
-    If found invalid syntax, return None.
+    If found invalid syntax, raise ValueError.
 
     Arguments:
         file_list_lines {List[str]} - - lines of file list
