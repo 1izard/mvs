@@ -1,6 +1,0 @@
-tmp2_1.txt >> 
-tmp2_0.txt >> 
-tmp2_2.txt >> 
-tmpd2_1 >> 
-tmpd2_0 >> 
-tmpd2_2 >> 
