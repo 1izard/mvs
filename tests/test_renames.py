@@ -1,3 +1,4 @@
+import pytest
 import os
 
 from renames import renames
@@ -46,3 +47,84 @@ def test_read_file_lines():
     actual
 
     assert expected == actual
+
+
+def test_build_file_name_pair_valid():
+    expected = ('src1', 'dst1')
+    arg = 'src1 >> dst1'
+    actual = renames.build_file_name_pair(arg)
+    assert expected == actual
+
+
+def test_build_file_name_pair_invalid_char():
+    expected = None
+    args = ['/src1 >> dst1', 'src1 >> /dst1']
+    for arg in args:
+        actual = renames.build_file_name_pair(arg)
+        assert expected == actual
+
+
+def test_build_file_name_pair_invalid_syntax():
+    expected = None
+    args = ['src1 > dst1', 'src 1 >> dst1']
+    for arg in args:
+        actual = renames.build_file_name_pair(arg)
+        assert expected == actual
+
+
+def test_has_duplicate_value_true():
+    expected = True
+    arg = {
+        'src1': 'dst1',
+        'src2': 'dst1',
+    }
+    actual = renames.has_duplicate_value(arg)
+
+    assert expected == actual
+
+
+def test_has_duplicate_false():
+    expected = False
+    arg = {
+        'src1': 'dst1',
+        'src2': 'dst2',
+    }
+    actual = renames.has_duplicate_value(arg)
+
+    assert expected == actual
+
+
+def test_build_file_name_map_valid():
+    expected = {
+        'src1': 'dst1',
+        'src2': 'dst2'
+    }
+
+    arg = ['src1 >> dst1', 'src2 >> dst2']
+    actual = renames.build_file_name_map(arg)
+
+    assert expected == actual
+
+
+def test_build_file_name_map_with_invalid_syntax():
+    with pytest.raises(ValueError) as excinfo:
+        arg = ['src1 > dst1', 'src2 > dst2']
+        renames.build_file_name_map(arg)
+
+    assert 'line 1: Invalid syntax;' in str(excinfo.value)
+
+
+def test_build_file_name_map_with_duplicate_src():
+    with pytest.raises(ValueError) as excinfo:
+        arg = ['src1 >> dst1', 'src1 >> dst2']
+        renames.build_file_name_map(arg)
+
+    assert 'Found a duplicate src file name' in str(excinfo.value)
+
+
+def test_build_file_name_map_with_duplicate_dst():
+    with pytest.raises(ValueError) as excinfo:
+        arg = ['src1 >> dst1', 'src2 >> dst1']
+        renames.build_file_name_map(arg)
+
+    assert 'Found a duplicate dst file name' in str(excinfo.value)
