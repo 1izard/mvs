@@ -8,7 +8,7 @@ flake8 = "*"
 autopep8 = "*"
 pytest = "*"
 tox = "*"
-mvs = {editable = true,path = "."}
+renames = {editable = true,path = "."}
 
 [packages]
 
