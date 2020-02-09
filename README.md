@@ -8,10 +8,10 @@ Pipfile and Pipfile.lock are on this repository.
 If you have installed `pipenv` already, you can install and use this tool soon without changing your local Python environment. If not, exec `$ pip install pipenv` to install `pipenv`.  
 
 First, clone this repository in your arbitrary directory.  
-Go to the `renames` directory, where there is Pipfile and Pipfile.lock, and type `$ pipenv install`.  
+Go to the `renames` directory, where there are Pipfile and Pipfile.lock, and type `$ pipenv install`.  
 Virtual Python environment that contains this `renames` package in installed `pip` list is created.  
 Exec `$ pipenv shell` and enter created virtaul environment.  
-(See `renames` package is in `pip` list by `$ pip list`.)    
+(See `renames` package is in `pip` list by `$ pip list` in virtual environment.)    
 (You can exit virtual environment to type `$ exit` anywhere.)
 
 All ready to try this tool!  
