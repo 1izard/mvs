@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3376a716db67eb9066aee2e3dc5a27e3d585ea0066e86119640609674617e5d4"
+            "sha256": "dc35ae97f938c69546b16d1fa3a1443d2216fdcd5c517cc16116d08890d56a0e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -15,7 +15,11 @@
             }
         ]
     },
-    "default": {},
+    "default": {
+        "renames": {
+            "path": "."
+        }
+    },
     "develop": {
         "attrs": {
             "hashes": [
@@ -124,10 +128,6 @@
             ],
             "index": "pypi",
             "version": "==5.3.5"
-        },
-        "renames": {
-            "editable": true,
-            "path": "."
         },
         "six": {
             "hashes": [

@@ -8,9 +8,9 @@ flake8 = "*"
 autopep8 = "*"
 pytest = "*"
 tox = "*"
-renames = {editable = true,path = "."}
 
 [packages]
+renames = {path = "."}
 
 [requires]
 python_version = "3.7"
