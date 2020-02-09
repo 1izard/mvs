@@ -9,7 +9,7 @@ import tempfile
 
 
 FILE_LIST_LINE_PATTERN = re.compile(r'^\S+\s*?>>\s*?\S+$')
-INVALID_CHAR_PATTERN = re.compile(r'.*(/).*')
+INVALID_CHAR_PATTERN = re.compile(r'.*(/|\"|\').*')
 
 
 def glob_file_names(dir_path: str) -> List[str]:
@@ -66,7 +66,7 @@ def read_file_list_lines(file_path: str) -> List[str]:
         return lines
 
 
-def build_file_name_pair(file_list_line: str) -> Tuple[str, str] or None:
+def build_file_name_pair(file_list_line: str) -> Tuple[str, str]:
     """Build and return file name pair of src and dst.
     Return (src, dst) when file list line follows the correct format, otherwise retunr None.
 
@@ -74,16 +74,17 @@ def build_file_name_pair(file_list_line: str) -> Tuple[str, str] or None:
         file_list_line {str} - - file list line
 
     Returns:
-        Tuple[str, str] or None - - (src, dst) or None
+        Tuple[str, str] - - (src, dst)
     """
     if INVALID_CHAR_PATTERN.match(file_list_line):
-        return None
+        raise ValueError('line {}: Invalid character; ' + file_list_line)
     res = FILE_LIST_LINE_PATTERN.fullmatch(file_list_line)
     if res:
         file_name_pair = res.group().split('>>')
         return (file_name_pair[0].strip(), file_name_pair[1].strip())
     else:
-        return None
+        raise ValueError('line {}: Invalid syntax; ' + file_list_line +
+                         '\n' + 'Expected format is such as "src" >> dst".')
 
 
 def has_duplicate_value(mp: Dict[str, str]) -> bool:
@@ -103,13 +104,11 @@ def build_file_name_map(file_list_lines: List[str]) -> Dict[str, str]:
     """
     file_name_map = {}
     for i, line in enumerate(file_list_lines, 1):
-        res = build_file_name_pair(line)
-        if res:
+        try:
+            res = build_file_name_pair(line)
             file_name_map[res[0]] = res[1]
-        else:
-            err_msg = f'line {i}: Invalid syntax; {line}\n\
-                Expected format is such as "src >> dst".'
-            raise ValueError(err_msg)
+        except ValueError as err:
+            raise ValueError(str(err).format(i))
 
     # check duplicate src file names
     if len(file_list_lines) != len(file_name_map):
