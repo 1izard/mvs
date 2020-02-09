@@ -16,7 +16,7 @@ def main():
     current_dir_path = os.getcwd()
     file_names = renames.glob_file_names(current_dir_path)
     if len(file_names) == 0:
-        print('No files on current directory')
+        print('No file on current directory')
         sys.exit(1)
 
     file_names.sort()
