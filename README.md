@@ -1,6 +1,6 @@
 # renames
 
-`renames` is a command line tool implemented with Python.  
+`renames` is a command line tool implemented with Python for Linux/MacOS.   
 You can rename files on current directory at once.  
 
 # Installation
@@ -16,11 +16,23 @@ Exec `$ pipenv shell` and enter created virtaul environment.
 
 All ready to try this tool!  
 Go to a directory where there are many files you have to type `mv` again and again.
-
+  
+![installation_screenshot](images/installation_screenshot.png)
 
 
 # Usage  
-Exec `$ renames`, then your default editor is open.  
+Exec `$ renames`, then your default editor is open (`renames` gets editor from `EDITOR` env variable. If not found, tries to open `vi`).  
 File names on current directory will be displayed.  
-Type destinate file name after `>>` and close editor with saving.  
+Type destinate file names after `>>` and close editor with saving.  
 Files are renamed at once ;)
+
+## Example
+Before:  
+
+![renames_before_screenshot](images/renames_before_screenshot.png)
+
+![renames_editor_screenshot](images/renames_editor_screenshot.png)
+
+After:  
+
+![renames_after_screenshot](images/renames_after_screenshot.png)
