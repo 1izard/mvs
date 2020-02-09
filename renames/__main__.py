@@ -19,6 +19,7 @@ def main():
         print('No files on current directory')
         sys.exit(1)
 
+    file_names.sort()
     renames.write_file_names(file_names, FILELIST_PATH)
 
     status_code = renames.open_editor(FILELIST_PATH)
