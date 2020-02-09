@@ -74,20 +74,34 @@ def test_build_file_name_pair_valid():
     assert expected == actual
 
 
-def test_build_file_name_pair_invalid_char():
-    expected = None
+def test_build_file_name_pair_with_invalid_char_slash():
     args = ['/src1 >> dst1', 'src1 >> /dst1']
-    for arg in args:
-        actual = renames.build_file_name_pair(arg)
-        assert expected == actual
+    for i, arg in enumerate(args, 1):
+        with pytest.raises(ValueError) as excinfo:
+            renames.build_file_name_pair(arg)
+        assert 'line {}: Invalid character' in str(excinfo.value)
+
+
+def test_build_file_name_pair_with_invalid_char_single_quote():
+    arg = "'/src1' >> dst1"
+    with pytest.raises(ValueError) as excinfo:
+        renames.build_file_name_pair(arg)
+    assert 'line {}: Invalid character' in str(excinfo.value)
+
+
+def test_build_file_name_pair_with_invalid_char_double_quote():
+    arg = '"/src1" >> dst1'
+    with pytest.raises(ValueError) as excinfo:
+        renames.build_file_name_pair(arg)
+    assert 'line {}: Invalid character' in str(excinfo.value)
 
 
 def test_build_file_name_pair_invalid_syntax():
-    expected = None
     args = ['src1 > dst1', 'src 1 >> dst1']
     for arg in args:
-        actual = renames.build_file_name_pair(arg)
-        assert expected == actual
+        with pytest.raises(ValueError) as excinfo:
+            renames.build_file_name_pair(arg)
+        assert 'line {}: Invalid syntax' in str(excinfo.value)
 
 
 def test_has_duplicate_value_true():
