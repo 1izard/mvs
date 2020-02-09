@@ -4,6 +4,8 @@ import subprocess
 import traceback
 import sys
 import re
+from collections import deque, namedtuple
+import tempfile
 
 
 FILE_LIST_LINE_PATTERN = re.compile(r'^\S+\s*?>>\s*?\S+$')
@@ -118,3 +120,33 @@ def build_file_name_map(file_list_lines: List[str]) -> Dict[str, str]:
         raise ValueError('Found a duplicate dst file name. File name must be unique.')
 
     return file_name_map
+
+
+def rename_files(file_name_map: Dict[str, str], dir_path: str):
+    flag_map = {k: False for k in file_name_map.keys()}
+    Node = namedtuple('Node', ('src', 'dst'))
+    node_stack: List[Node] = deque()
+
+    for src_file_name, dst_file_name in file_name_map.items():
+        if flag_map[src_file_name]:
+            continue
+
+        node_stack.append(Node(src_file_name, dst_file_name))
+        flag_map[src_file_name] = True
+
+        while (dst_file_name in file_name_map) and (flag_map[dst_file_name] is False):
+            node_stack.append(Node(dst_file_name, file_name_map[dst_file_name]))
+            flag_map[dst_file_name] = True
+            dst_file_name = file_name_map[dst_file_name]
+
+        # save head node file temporarily for cycle
+        head_node = node_stack.pop()
+        with tempfile.NamedTemporaryFile() as f:
+            tmpfile_path = f.name
+        os.rename(os.path.join(dir_path, head_node.src), tmpfile_path)
+
+        while len(node_stack) > 0:
+            node = node_stack.pop()
+            os.rename(os.path.join(dir_path, node.src), os.path.join(dir_path, node.dst))
+
+        os.rename(tmpfile_path, os.path.join(dir_path, head_node.dst))
