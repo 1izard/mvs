@@ -4,10 +4,15 @@
 You can rename files on current directory at once.  
 
 # Installation
+
+## Basic
+Clone this repo, go to `renames` directory where there is `seup.py`, and exec `$ pip install .`
+
+## Use Pipenv
 Pipfile and Pipfile.lock are on this repository.  
 If you have installed `pipenv` already, you can install and use this tool soon without changing your local Python environment. If not, exec `$ pip install pipenv` to install `pipenv`.  
 
-First, clone this repository in your arbitrary directory.  
+First, clone this repo in your arbitrary directory.  
 Go to the `renames` directory, where there are Pipfile and Pipfile.lock, and type `$ pipenv install`.  
 Virtual Python environment that contains this `renames` package in installed `pip` list is created.  
 Exec `$ pipenv shell` and enter created virtaul environment.  
