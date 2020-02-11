@@ -1,6 +1,6 @@
-tmpd0 >> 
-tmpd1 >> 
-tmpd2 >> 
-tmp0.txt >> 
-tmp1.txt >> 
-tmp2.txt >> 
+tmpd0 >> tmpd0
+tmpd1 >> tmpd1
+tmpd2 >> tmpd2
+tmp0.txt >> tmp0.txt
+tmp1.txt >> tmp1.txt
+tmp2.txt >> tmp2.txt

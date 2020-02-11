@@ -34,14 +34,14 @@ def test_glob_file_names():
     actual = renames.glob_file_names(TESTD0_PATH)
     actual.sort()
 
-    assert expected == actual
+    assert actual == expected
 
 
 def test_write_file_names():
     file_names = ['tmpd0', 'tmpd1', 'tmpd2', 'tmp0.txt', 'tmp1.txt', 'tmp2.txt']
 
-    expected = ['tmpd0 >> ', 'tmpd1 >> ', 'tmpd2 >> ',
-                'tmp0.txt >> ', 'tmp1.txt >> ', 'tmp2.txt >> ']
+    expected = ['tmpd0 >> tmpd0', 'tmpd1 >> tmpd1', 'tmpd2 >> tmpd2',
+                'tmp0.txt >> tmp0.txt', 'tmp1.txt >> tmp1.txt', 'tmp2.txt >> tmp2.txt']
     expected.sort()
 
     dst_path = os.path.join(TEST_PRODUCTS_PATH, 'test_write_file_names_result.txt')
@@ -51,7 +51,7 @@ def test_write_file_names():
         lines = [l.strip('\n') for l in f]
 
     actual = sorted(lines)
-    assert expected == actual
+    assert actual == expected
 
 
 def test_read_file_lines():
@@ -64,14 +64,14 @@ def test_read_file_lines():
     actual = renames.read_file_list_lines(os.path.join(TESTD1_PATH, 'filelist.txt'))
     actual
 
-    assert expected == actual
+    assert actual == expected
 
 
 def test_build_file_name_pair_valid():
     expected = ('src1', 'dst1')
     arg = 'src1 >> dst1'
     actual = renames.build_file_name_pair(arg)
-    assert expected == actual
+    assert actual == expected
 
 
 def test_build_file_name_pair_with_invalid_char_slash():
@@ -112,7 +112,7 @@ def test_has_duplicate_value_true():
     }
     actual = renames.has_duplicate_value(arg)
 
-    assert expected == actual
+    assert actual == expected
 
 
 def test_has_duplicate_false():
@@ -123,7 +123,7 @@ def test_has_duplicate_false():
     }
     actual = renames.has_duplicate_value(arg)
 
-    assert expected == actual
+    assert actual == expected
 
 
 def test_build_file_name_map_valid():
@@ -135,7 +135,7 @@ def test_build_file_name_map_valid():
     arg = ['src1 >> dst1', 'src2 >> dst2']
     actual = renames.build_file_name_map(arg)
 
-    assert expected == actual
+    assert actual == expected
 
 
 def test_build_file_name_map_with_invalid_syntax():
@@ -180,7 +180,7 @@ def test_rename_files_normal():
     with os.scandir(TESTD2_PATH) as it:
         actual = set([e.name for e in it])
 
-    assert expected == actual
+    assert actual == expected
 
 
 def test_rename_files_node():
@@ -201,7 +201,7 @@ def test_rename_files_node():
     with os.scandir(TESTD2_PATH) as it:
         actual = set([e.name for e in it])
 
-    assert expected == actual
+    assert actual == expected
 
 
 def test_rename_files_cycle():
@@ -222,7 +222,7 @@ def test_rename_files_cycle():
     with os.scandir(TESTD2_PATH) as it:
         actual = set([e.name for e in it])
 
-    assert expected == actual
+    assert actual == expected
 
 
 def test_rename_files_cycle_pair():
@@ -243,7 +243,7 @@ def test_rename_files_cycle_pair():
     with os.scandir(TESTD2_PATH) as it:
         actual = set([e.name for e in it])
 
-    assert expected == actual
+    assert actual == expected
 
 
 def test_rename_files_including_same():
@@ -265,4 +265,4 @@ def test_rename_files_including_same():
     with os.scandir(TESTD2_PATH) as it:
         actual = set([e.name for e in it])
 
-    assert expected == actual
+    assert actual == expected
