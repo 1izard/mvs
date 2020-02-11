@@ -20,7 +20,7 @@ def glob_file_names(dir_path: str) -> List[str]:
 
 def write_file_names(file_names: List[str], dst_path: str):
     with open(dst_path, 'w') as f:
-        lines = [f'{file_name} >> ' for file_name in file_names]
+        lines = [f'{file_name} >> {file_name}' for file_name in file_names]
         f.write('\n'.join(lines))
 
 
@@ -128,6 +128,9 @@ def rename_files(file_name_map: Dict[str, str], dir_path: str):
     node_stack: List[Node] = deque()
 
     for src_file_name, dst_file_name in file_name_map.items():
+        if src_file_name == dst_file_name:
+            flag_map[src_file_name] = True
+
         if flag_map[src_file_name]:
             continue
 
