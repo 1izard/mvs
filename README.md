@@ -5,6 +5,8 @@ You can rename files on current directory at once.
 
 # Installation
 
+You need Python >= 3.7.
+
 ## Basic
 Clone this repo, go to `renames` directory where there is `seup.py`, and exec `$ pip install .`
 
