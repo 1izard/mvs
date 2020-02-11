@@ -85,7 +85,7 @@ def build_file_name_pair(file_list_line: str) -> Tuple[str, str]:
         return (file_name_pair[0].strip(), file_name_pair[1].strip())
     else:
         raise ValueError('line {}: Invalid syntax; ' + file_list_line +
-                         '\n' + 'Expected format is such as "src" >> dst".')
+                         '\n' + 'Expected format is such as "src >> dst".')
 
 
 def has_duplicate_value(mp: Dict[str, str]) -> bool:
